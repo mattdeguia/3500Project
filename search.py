@@ -3,7 +3,7 @@
 # PYTHON IMPLEMENTATION OF A CUSTOM STATISTICS SUMMARY CALCULATOR
 # date: 11/14/21
 # Student: Matthew Deguia 
-# Student: ...
+# Student: Nathaly Leon
 # Student: ...
 # description: Implementation of a statistics summary Calculator
 

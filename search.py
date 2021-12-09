@@ -41,6 +41,33 @@ DataSet = [elem.strip().split(',') for elem in DataSet]
 
 # ==================================================================
 # 2-3. data cleaning functions
+# eliminating columns with non-numeric values
+def delCol(data):
+    num_data = []
+    num_data_list = []
+    index_list = []
+    row_len = rowLen(data)
+
+    while row_len > 0:
+        # find the indexes in which there is numeric data
+        # check if the value is an int or a float
+        if data[1][row_len-1].isdigit() or data[1][row_len-1].replace('.', '', 1).isdigit():
+            index_list.append(row_len-1)
+        row_len-=1
+
+    for row in data:
+        for index,ele in enumerate(row):
+            if index in index_list:
+                num_data.append(ele)
+        num_data_list.append(num_data) # to keep the structure of rows
+        num_data = []
+
+    return num_data_list
+
+def rowLen(data):
+    for row in data:
+        return len(row)
+
 # finished already:
 # - count
 # - unique
@@ -161,6 +188,8 @@ def Search(value, matrix):
 # Boston.csv
 # - 40.61, temperatureHigh
 # - 40.61, DataSet
+
+DataSet = delCol(DataSet)
 
 matrix = input("Enter 'DataSet' to search thru whole data set, or a specific column to search through: ")
 matrix = str(matrix)

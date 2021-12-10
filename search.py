@@ -32,15 +32,16 @@ import sys
 
 # ==================================================================
 # 1. reading from csv file and storing the whole data set
-#with open("InputDataSample.csv") as file:
-with open("Boston_Lyft_Uber_Data.csv") as file:
+with open("InputDataSample.csv") as file:
+#with open("Boston_Lyft_Uber_Data.csv") as file:
     DataSet = file.readlines()
 
 # - store the whole data set as an array
 DataSet = [elem.strip().split(',') for elem in DataSet]
 
 # ==================================================================
-# 2-3. data cleaning functions
+# 2. data cleaning functions
+# ------------------------------------------------------------------
 # eliminating columns with non-numeric values
 def delCol(data):
     num_data = []
@@ -61,13 +62,46 @@ def delCol(data):
                 num_data.append(ele)
         num_data_list.append(num_data) # to keep the structure of rows
         num_data = []
-
     return num_data_list
 
 def rowLen(data):
     for row in data:
         return len(row)
 
+# ------------------------------------------------------------------
+# eliminating empty rows
+def emptyRow(data):
+    no_empty_row = []
+    for x in data:
+        if x != emptied(data):
+            no_empty_row.append(x)
+    return no_empty_row
+
+def emptied(data): # gets an empty row for comparison
+    emp_list = []
+    for row in data:
+        for ele in row:
+            emp_list.append('')
+        return emp_list
+
+# ------------------------------------------------------------------
+# eliminating duplicate rows
+def duplicates(data):
+    no_dup = []
+    for row in data:
+        if row not in no_dup:
+            no_dup.append(row)
+    return no_dup
+
+# ------------------------------------------------------------------
+# eliminating rows with missing values
+def missingVal(data):
+    for row in data:
+        for ele in row:
+            if ele == 'NA':
+                data.remove(row)
+
+# 3. statistical operations
 # finished already:
 # - count
 # - unique
@@ -190,6 +224,12 @@ def Search(value, matrix):
 # - 40.61, DataSet
 
 DataSet = delCol(DataSet)
+DataSet = emptyRow(DataSet)
+DataSet = duplicates(DataSet)
+missingVal(DataSet)
+
+#for i in DataSet:
+#    print(i)
 
 matrix = input("Enter 'DataSet' to search thru whole data set, or a specific column to search through: ")
 matrix = str(matrix)

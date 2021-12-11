@@ -43,20 +43,20 @@ DataSet = [elem.strip().split(',') for elem in DataSet]
 # 2. data cleaning functions
 # ------------------------------------------------------------------
 # eliminating columns with non-numeric values
-def delCol(data):
+def delCol():
     num_data = []
     num_data_list = []
     index_list = []
-    row_len = rowLen(data)
+    row_len = rowLen(DataSet)
 
     while row_len > 0:
         # find the indexes in which there is numeric data
         # check if the value is an int or a float
-        if data[1][row_len-1].isdigit() or data[1][row_len-1].replace('.', '', 1).isdigit():
+        if DataSet[1][row_len-1].isdigit() or DataSet[1][row_len-1].replace('.', '', 1).isdigit():
             index_list.append(row_len-1)
         row_len-=1
 
-    for row in data:
+    for row in DataSet:
         for index,ele in enumerate(row):
             if index in index_list:
                 num_data.append(ele)
@@ -64,42 +64,48 @@ def delCol(data):
         num_data = []
     return num_data_list
 
-def rowLen(data):
-    for row in data:
+def rowLen(DataSet):
+    for row in DataSet:
         return len(row)
 
 # ------------------------------------------------------------------
 # eliminating empty rows
-def emptyRow(data):
+def emptyRow():
     no_empty_row = []
-    for x in data:
-        if x != emptied(data):
+    for x in DataSet:
+        if x != emptied():
             no_empty_row.append(x)
     return no_empty_row
 
-def emptied(data): # gets an empty row for comparison
+def emptied(): # gets an empty row for comparison
     emp_list = []
-    for row in data:
+    for row in DataSet:
         for ele in row:
             emp_list.append('')
         return emp_list
 
+# -----------------------------------------------------------------
+# eliminating rows with empty values
+def emptyVal():
+    for row in DataSet:
+        if '' in row:
+            DataSet.remove(row)
+
 # ------------------------------------------------------------------
 # eliminating duplicate rows
-def duplicates(data):
+def duplicates():
     no_dup = []
-    for row in data:
+    for row in DataSet:
         if row not in no_dup:
             no_dup.append(row)
     return no_dup
 
 # ------------------------------------------------------------------
 # eliminating rows with missing values
-def missingVal(data):
-    for row in data:
-        for ele in row:
-            if ele == 'NA':
-                data.remove(row)
+def missingVal():
+    for row in DataSet:
+        if 'NA' in row:
+            DataSet.remove(row)
 
 # 3. statistical operations
 # finished already:
@@ -223,10 +229,11 @@ def Search(value, matrix):
 # - 40.61, temperatureHigh
 # - 40.61, DataSet
 
-DataSet = delCol(DataSet)
-DataSet = emptyRow(DataSet)
-DataSet = duplicates(DataSet)
-missingVal(DataSet)
+DataSet = delCol()
+DataSet = emptyRow()
+DataSet = duplicates()
+missingVal()
+emptyVal()
 
 #for i in DataSet:
 #    print(i)

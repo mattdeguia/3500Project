@@ -231,17 +231,17 @@ def Search(value, matrix):
 
 # Testing the Data Cleaning functions
 DataSet = delCol()
-DataSet = emptyRow()
-DataSet = duplicates()
-missingVal()
-emptyVal()
+#DataSet = emptyRow()
+#DataSet = duplicates()
+#missingVal()
+#emptyVal()
 
 # Testing the Search function
-matrix = input("Enter 'DataSet' to search thru whole data set, or a specific column to search through: ")
-matrix = str(matrix)
-value = input("Enter a value to search for: ")
-value = str(value)
-Search(value, matrix)
+#matrix = input("Enter 'DataSet' to search thru whole data set, or a specific column to search through: ")
+#matrix = str(matrix)
+#value = input("Enter a value to search for: ")
+#value = str(value)
+#Search(value, matrix)
 
 # ==================================================================
 

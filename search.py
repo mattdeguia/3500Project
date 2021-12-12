@@ -4,20 +4,15 @@
 # date: 11/14/21
 # Student: Matthew Deguia 
 # Student: Nathaly Leon
-# Student: ...
+# Student: Mike Cha
 # description: Implementation of a statistics summary Calculator
 
 """
     Program Overview:
-    1. Data Loading - Read from csv files
-    2. Data Cleaning - Must have these cleaning tasks
-       - Remove rows with non-numerical data on any column
-       - Remove rows with empty values on any column
-       - Remove all rows with empty values on any column
-       - Remove all rows with duplicated values
-       - Remove all fully empty rows
-    3. Functions - All functions must be made ourselves
-    4. Searching Capability - Must be able to search any element in any column
+    1. Data Loading
+    2. Data Cleaning
+    3. Statistical Operations
+    4. Searching Capability
 
 Dataset:
 "DataSet[0]"        Column 1 [0]     Column 2 [1]    Column # [#]
@@ -38,6 +33,7 @@ with open("InputDataSample.csv") as file:
 
 # - store the whole data set as an array
 DataSet = [elem.strip().split(',') for elem in DataSet]
+
 
 # ==================================================================
 # 2. data cleaning functions
@@ -107,6 +103,11 @@ def missingVal():
         if 'NA' in row:
             DataSet.remove(row)
 
+
+
+
+
+# ==================================================================
 # 3. statistical operations
 # finished already:
 # - count
@@ -125,6 +126,10 @@ def missingVal():
 # - 50 percentile
 # - 60 percentile
 # - 80 percentile
+
+
+
+
 
 
 # ==================================================================
@@ -218,26 +223,20 @@ def Search(value, matrix):
         print ()
 
 
+
+
+
 # ==================================================================
-# 4. Testing the Search function:
+# TESTING ALL FUNCTIONS
 
-# InputDataSample.csv:
-# - 320141, Column A
-# - 320141, DataSet
-
-# Boston.csv
-# - 40.61, temperatureHigh
-# - 40.61, DataSet
-
+# Testing the Data Cleaning functions
 DataSet = delCol()
 DataSet = emptyRow()
 DataSet = duplicates()
 missingVal()
 emptyVal()
 
-#for i in DataSet:
-#    print(i)
-
+# Testing the Search function
 matrix = input("Enter 'DataSet' to search thru whole data set, or a specific column to search through: ")
 matrix = str(matrix)
 value = input("Enter a value to search for: ")
@@ -245,24 +244,6 @@ value = str(value)
 Search(value, matrix)
 
 # ==================================================================
-
-"""
-Tasks:
-    1. must be able to pass the dataset as an argument to the file
-    2. NA
-    3. NA
-    4. try and catch block.
-       - if the user inputs a column to search thru but the column doesn't exist,
-         tell the user that the column inputted was not found, and to input a correct column.
-         maybe display all the columns from the csv file using a for loop. tell user to 
-         choose one of those column names
-       - if the user inputs a value that's not found
-
-Final Thoughts:
-    - brute force way, looking thru each index and finding matches
-    - did not sort the data before searching
-    - but it all works like it should
-"""
 
 
 

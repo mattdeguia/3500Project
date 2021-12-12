@@ -246,6 +246,153 @@ DataSet = delCol()
 # ==================================================================
 
 
+import math
+
+
+columnA = []
+columnB = []
+count = 0 #Amount in Rows
+
+columnA.sort()
+columnB.sort()
+
+f = open("InputDataSample.csv")
+with open("InputDataSample.csv","r") as read:
+    i = 0
+    for line in read:
+        for index, line in enumerate(read):
+            count += 1
+            word = line.split(",")
+            columnA.append(int(word[0]))
+            columnB.append(int(word[1]))
+f.close()
+
+def calcMean (column):
+    mean = 0 
+
+    for i in column:
+        mean = mean + int(i)
+
+    return mean/count
+
+def calcMedian(column):
+    median = 0
+
+    copyArray = column
+
+    n = len(copyArray)
+    k = n/2
+    copyArray.sort()
+    
+    if k % 2 == 0:
+        median = (copyArray[k] + copyArray[k+1]) / 2
+        return median
+    else:
+        return copyArray[k]
+
+def calcMode(column):
+    modeArray = {} #Number of most repeated numbers
+    finalArray = [] #Has the actual Number Inputs
+    
+    for i in column:
+        modeArray.setdefault(i,0)
+        #increments 1 when it sees a repeatable number
+        modeArray[i] += 1     
+    
+    maximum = max(modeArray.values())
+
+    for j, item in modeArray.items():
+        if item == maximum:
+            finalArray.append(j)
+    return max(finalArray)
+
+    
+def calcUnique(column):
+    unique = []
+    solution = []
+    counter = 0
+    l = len(column)
+    index = 0
+    for i in range(l): 
+        for x in range(i+1,l):
+            if column[x] == column[i]:
+                index += 1
+            else:
+                index += 0
+        unique.append(index)
+        index = 0
+    for j in range(l):
+        if unique[j] == 0:
+            solution.append(column[j])
+    return len(solution)
+
+
+
+def calcVariance(column):
+    variance = 0
+    sum = 0
+
+    mean = calcMean(column)
+
+    for j in column:
+        calc = j - mean
+        calc = calc * calc
+        variance = variance + calc
+        
+    variance = (variance / (count-1))
+
+    return variance
+
+
+# Divided Variance to find Stdv
+#---------------------------------------
+def stanDev(column):
+    return math.sqrt(calcVariance(column))
+#---------------------------------------
+
+
+# Calculates Percentiles of a Column
+#---------------------------------------
+def find20(column):
+    twenty = int(.2 * (count + 1))
+    return column[twenty]
+
+def find40(column):
+    fourty = int(.4 * (count + 1))
+    return column[fourty]
+
+def find50(column):
+    fifty = int(.5 * (count + 1))
+    return column[fifty]
+
+def find60(column):
+    sixty = int(.6 * (count + 1))
+    return column[sixty]
+
+def find80(column):
+    eighty = int(.8 * (count + 1))
+    return column[eighty]
+#---------------------------------------
+print("                                                  ")
+print("                     Calculator                   ")
+print("                     ----------                   ")
+print("Descriptor            Column A            Column B")
+print("**********            ********            ********")
+print 'Count                ','{:,}'.format(count), "             "'{:,}'.format(count)                                  
+print 'Unique               ','{:,}'.format(calcUnique(columnA)), "              "'{:,}'.format(calcUnique(columnB))     
+print 'Mean                 ','{:,}'.format(calcMean(columnA)), "            "'{:,}'.format(calcMean(columnB))          
+print 'Median               ','{:,}'.format(calcMedian(columnA)), "            "'{:,}'.format(calcMedian(columnB))      
+print 'Mode                 ','{:,}'.format(calcMode(columnA)), "            "'{:,}'.format(calcMode(columnB))          
+print 'SD                   ','{:,}'.format(stanDev(columnA)), "     "'{:,}'.format(stanDev(columnB))            
+print 'Variance             ','{:,}'.format(calcVariance(columnA)), "     "'{:,}'.format(calcVariance(columnB))  
+print 'Minimum              ','{:,}'.format(min(columnA)), "                 "'{:,}'.format(min(columnB))
+print '20 Percentile        ','{:,}'.format(find20(columnA)), "            "'{:,}'.format(find20(columnB))
+print '40 Percentile        ','{:,}'.format(find40(columnA)), "            "'{:,}'.format(find40(columnB))
+print '50 Percentile        ','{:,}'.format(find50(columnA)), "            "'{:,}'.format(find50(columnB))
+print '60 Percentile        ','{:,}'.format(find60(columnA)), "            "'{:,}'.format(find60(columnB))
+print '80 Percentile        ','{:,}'.format(find80(columnA)), "            "'{:,}'.format(find80(columnB))
+print 'Maximum              ','{:,}'.format(max(columnA)), "            "'{:,}'.format(max(columnB))
+print("                                                  ")
 
 
 

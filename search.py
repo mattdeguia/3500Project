@@ -83,9 +83,11 @@ def emptied(): # gets an empty row for comparison
 # -----------------------------------------------------------------
 # eliminating rows with empty values
 def emptyVal():
+    no_empty_val = []
     for row in DataSet:
-        if '' in row:
-            DataSet.remove(row)
+        if all(row):
+            no_empty_val.append(row)
+    return no_empty_val
 
 # ------------------------------------------------------------------
 # eliminating duplicate rows
@@ -99,12 +101,11 @@ def duplicates():
 # ------------------------------------------------------------------
 # eliminating rows with missing values
 def missingVal():
+    no_missing_val = []
     for row in DataSet:
-        if 'NA' in row:
-            DataSet.remove(row)
-
-
-
+        if 'NA' not in row:
+            no_missing_val.append(row)
+    return no_missing_val
 
 
 # ==================================================================
@@ -231,10 +232,13 @@ def Search(value, matrix):
 
 # Testing the Data Cleaning functions
 DataSet = delCol()
-#DataSet = emptyRow()
-#DataSet = duplicates()
-#missingVal()
-#emptyVal()
+DataSet = emptyRow()
+DataSet = duplicates()
+DataSet = emptyVal()
+DataSet = missingVal()
+
+#for i in DataSet:
+#    print(i)
 
 # Testing the Search function
 #matrix = input("Enter 'DataSet' to search thru whole data set, or a specific column to search through: ")
@@ -242,7 +246,6 @@ DataSet = delCol()
 #value = input("Enter a value to search for: ")
 #value = str(value)
 #Search(value, matrix)
-
 # ==================================================================
 
 
@@ -378,20 +381,20 @@ print("                     Calculator                   ")
 print("                     ----------                   ")
 print("Descriptor            Column A            Column B")
 print("**********            ********            ********")
-print 'Count                ','{:,}'.format(count), "             "'{:,}'.format(count)                                  
-print 'Unique               ','{:,}'.format(calcUnique(columnA)), "              "'{:,}'.format(calcUnique(columnB))     
-print 'Mean                 ','{:,}'.format(calcMean(columnA)), "            "'{:,}'.format(calcMean(columnB))          
-print 'Median               ','{:,}'.format(calcMedian(columnA)), "            "'{:,}'.format(calcMedian(columnB))      
-print 'Mode                 ','{:,}'.format(calcMode(columnA)), "            "'{:,}'.format(calcMode(columnB))          
-print 'SD                   ','{:,}'.format(stanDev(columnA)), "     "'{:,}'.format(stanDev(columnB))            
-print 'Variance             ','{:,}'.format(calcVariance(columnA)), "     "'{:,}'.format(calcVariance(columnB))  
-print 'Minimum              ','{:,}'.format(min(columnA)), "                 "'{:,}'.format(min(columnB))
-print '20 Percentile        ','{:,}'.format(find20(columnA)), "            "'{:,}'.format(find20(columnB))
-print '40 Percentile        ','{:,}'.format(find40(columnA)), "            "'{:,}'.format(find40(columnB))
-print '50 Percentile        ','{:,}'.format(find50(columnA)), "            "'{:,}'.format(find50(columnB))
-print '60 Percentile        ','{:,}'.format(find60(columnA)), "            "'{:,}'.format(find60(columnB))
-print '80 Percentile        ','{:,}'.format(find80(columnA)), "            "'{:,}'.format(find80(columnB))
-print 'Maximum              ','{:,}'.format(max(columnA)), "            "'{:,}'.format(max(columnB))
+print('Count                ','{:,}'.format(count), "             "'{:,}'.format(count))
+print('Unique               ','{:,}'.format(calcUnique(columnA)), "              "'{:,}'.format(calcUnique(columnB))) 
+print('Mean                 ','{:,}'.format(calcMean(columnA)), "            "'{:,}'.format(calcMean(columnB)))
+print('Median               ','{:,}'.format(calcMedian(columnA)), "            "'{:,}'.format(calcMedian(columnB)))
+print('Mode                 ','{:,}'.format(calcMode(columnA)), "            "'{:,}'.format(calcMode(columnB)))     
+print('SD                   ','{:,}'.format(stanDev(columnA)), "     "'{:,}'.format(stanDev(columnB)))
+print('Variance             ','{:,}'.format(calcVariance(columnA)), "     "'{:,}'.format(calcVariance(columnB)))
+print('Minimum              ','{:,}'.format(min(columnA)), "                 "'{:,}'.format(min(columnB)))
+print('20 Percentile        ','{:,}'.format(find20(columnA)), "            "'{:,}'.format(find20(columnB)))
+print('40 Percentile        ','{:,}'.format(find40(columnA)), "            "'{:,}'.format(find40(columnB)))
+print('50 Percentile        ','{:,}'.format(find50(columnA)), "            "'{:,}'.format(find50(columnB)))
+print('60 Percentile        ','{:,}'.format(find60(columnA)), "            "'{:,}'.format(find60(columnB)))
+print('80 Percentile        ','{:,}'.format(find80(columnA)), "            "'{:,}'.format(find80(columnB)))
+print('Maximum              ','{:,}'.format(max(columnA)), "            "'{:,}'.format(max(columnB)))
 print("                                                  ")
 
 

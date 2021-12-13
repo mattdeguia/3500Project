@@ -27,12 +27,15 @@ import sys
 
 # ==================================================================
 # 1. reading from csv file and storing the whole data set
-with open("InputDataSample.csv") as file:
-#with open("Boston_Lyft_Uber_Data.csv") as file:
-    DataSet = file.readlines()
+try:
+    with open("InputDataSample.csv") as file:
+    #with open("Boston_Lyft_Uber_Data.csv") as file:
+        DataSet = file.readlines()
 
-# - store the whole data set as an array
-DataSet = [elem.strip().split(',') for elem in DataSet]
+    # - store the whole data set as an array
+    DataSet = [elem.strip().split(',') for elem in DataSet]
+except:
+    print("Something went wrong when reading the file.")
 
 
 # ==================================================================
@@ -106,32 +109,6 @@ def missingVal():
         if 'NA' not in row:
             no_missing_val.append(row)
     return no_missing_val
-
-
-# ==================================================================
-# 3. statistical operations
-# finished already:
-# - count
-# - unique
-# - mean
-# - median
-# - mode
-# - min
-# - max
-
-# still need:
-# - standard deviation
-# - variance
-# - 20 percentile
-# - 40 percentile
-# - 50 percentile
-# - 60 percentile
-# - 80 percentile
-
-
-
-
-
 
 # ==================================================================
 # 4. search function - search for anything in any or all rows
@@ -223,10 +200,6 @@ def Search(value, matrix):
         print (value, "is present", value_presence, "times in Column:", DataSet[0][col_index])
         print ()
 
-
-
-
-
 # ==================================================================
 # TESTING ALL FUNCTIONS
 
@@ -237,20 +210,21 @@ DataSet = duplicates()
 DataSet = emptyVal()
 DataSet = missingVal()
 
-#for i in DataSet:
-#    print(i)
+for i in DataSet:
+    print(i)
 
 # Testing the Search function
-#matrix = input("Enter 'DataSet' to search thru whole data set, or a specific column to search through: ")
-#matrix = str(matrix)
-#value = input("Enter a value to search for: ")
-#value = str(value)
-#Search(value, matrix)
-# ==================================================================
+print("\n")
+matrix = input("Enter 'DataSet' to search thru whole data set, or a specific column to search through: ")
+matrix = str(matrix)
+value = input("Enter a value to search for: ")
+value = str(value)
+Search(value, matrix)
 
+# ==================================================================
+# 3. Statistical Operations
 
 import math
-
 
 columnA = []
 columnB = []
@@ -288,10 +262,10 @@ def calcMedian(column):
     copyArray.sort()
     
     if k % 2 == 0:
-        median = (copyArray[k] + copyArray[k+1]) / 2
+        median = (copyArray[int(k)] + copyArray[int(k+1)]) / 2
         return median
     else:
-        return copyArray[k]
+        return copyArray[int(k)]
 
 def calcMode(column):
     modeArray = {} #Number of most repeated numbers
@@ -379,22 +353,22 @@ def find80(column):
 print("                                                  ")
 print("                     Calculator                   ")
 print("                     ----------                   ")
-print("Descriptor            Column A            Column B")
-print("**********            ********            ********")
-print('Count                ','{:,}'.format(count), "             "'{:,}'.format(count))
-print('Unique               ','{:,}'.format(calcUnique(columnA)), "              "'{:,}'.format(calcUnique(columnB))) 
+print("Descriptor            Column A                 Column B")
+print("**********            ********                 ********")
+print('Count                ','{:,}'.format(count), "                  "'{:,}'.format(count))
+print('Unique               ','{:,}'.format(calcUnique(columnA)), "                   "'{:,}'.format(calcUnique(columnB))) 
 print('Mean                 ','{:,}'.format(calcMean(columnA)), "            "'{:,}'.format(calcMean(columnB)))
-print('Median               ','{:,}'.format(calcMedian(columnA)), "            "'{:,}'.format(calcMedian(columnB)))
-print('Mode                 ','{:,}'.format(calcMode(columnA)), "            "'{:,}'.format(calcMode(columnB)))     
-print('SD                   ','{:,}'.format(stanDev(columnA)), "     "'{:,}'.format(stanDev(columnB)))
-print('Variance             ','{:,}'.format(calcVariance(columnA)), "     "'{:,}'.format(calcVariance(columnB)))
-print('Minimum              ','{:,}'.format(min(columnA)), "                 "'{:,}'.format(min(columnB)))
-print('20 Percentile        ','{:,}'.format(find20(columnA)), "            "'{:,}'.format(find20(columnB)))
-print('40 Percentile        ','{:,}'.format(find40(columnA)), "            "'{:,}'.format(find40(columnB)))
-print('50 Percentile        ','{:,}'.format(find50(columnA)), "            "'{:,}'.format(find50(columnB)))
-print('60 Percentile        ','{:,}'.format(find60(columnA)), "            "'{:,}'.format(find60(columnB)))
-print('80 Percentile        ','{:,}'.format(find80(columnA)), "            "'{:,}'.format(find80(columnB)))
-print('Maximum              ','{:,}'.format(max(columnA)), "            "'{:,}'.format(max(columnB)))
+print('Median               ','{:,}'.format(calcMedian(columnA)), "               "'{:,}'.format(calcMedian(columnB)))
+print('Mode                 ','{:,}'.format(calcMode(columnA)), "                 "'{:,}'.format(calcMode(columnB)))     
+print('SD                   ','{:,}'.format(stanDev(columnA)), "       "'{:,}'.format(stanDev(columnB)))
+print('Variance             ','{:,}'.format(calcVariance(columnA)), "    "'{:,}'.format(calcVariance(columnB)))
+print('Minimum              ','{:,}'.format(min(columnA)), "                      "'{:,}'.format(min(columnB)))
+print('20 Percentile        ','{:,}'.format(find20(columnA)), "                 "'{:,}'.format(find20(columnB)))
+print('40 Percentile        ','{:,}'.format(find40(columnA)), "                 "'{:,}'.format(find40(columnB)))
+print('50 Percentile        ','{:,}'.format(find50(columnA)), "                 "'{:,}'.format(find50(columnB)))
+print('60 Percentile        ','{:,}'.format(find60(columnA)), "                 "'{:,}'.format(find60(columnB)))
+print('80 Percentile        ','{:,}'.format(find80(columnA)), "                 "'{:,}'.format(find80(columnB)))
+print('Maximum              ','{:,}'.format(max(columnA)), "                 "'{:,}'.format(max(columnB)))
 print("                                                  ")
 
 

@@ -120,6 +120,7 @@ count = 0 #Amount in Rows
 columnA.sort()
 columnB.sort()
 
+# Reads the file
 f = open("InputDataSample.csv")
 with open("InputDataSample.csv","r") as read:
     i = 0
@@ -127,6 +128,7 @@ with open("InputDataSample.csv","r") as read:
         for index, line in enumerate(read):
             count += 1
             word = line.split(",")
+            #appends numbers into columnA and columnB
             columnA.append(int(word[0]))
             columnB.append(int(word[1]))
 f.close()

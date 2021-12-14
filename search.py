@@ -20,12 +20,12 @@ Dataset:
 "DataSet[2]"        val      [0]     val      [1]    val      [#]
 "DataSet[3]"        val      [0]     val      [1]    val      [#]
  etc...
-
 """
 
 import sys
+import math
 
-# ==================================================================
+# ==========================================================================
 # 1. reading from csv file and storing the whole data set
 try:
     with open("InputDataSample.csv") as file:
@@ -38,7 +38,7 @@ except:
     print("Something went wrong when reading the file.")
 
 
-# ==================================================================
+# ==========================================================================
 # 2. data cleaning functions
 # ------------------------------------------------------------------
 # eliminating columns with non-numeric values
@@ -110,126 +110,13 @@ def missingVal():
             no_missing_val.append(row)
     return no_missing_val
 
-# ==================================================================
-# 4. search function - search for anything in any or all rows
-# - this function should work for any data set, regardless of rows and columns
-def Search(value, matrix):
-   
-    # -------------------------------------------------------------
-    # 4A. All data in the matrix is stored as strings
-    # - if needed, must convert the given value into a string to compare values correctly
-    value = str(value)
-    
-    # -------------------------------------------------------------
-    # 4B. Searching through the whole data set
-    if matrix == "DataSet":
-        # - variable to keep track of how many times the values is present in the data set
-        # - variable to keep track of each row we're in
-        value_presence = 0
-        row_index = -1
-        # - formatting of details
-        print ()
-        print ("Details:")
-        print ("*********************************")
 
-        # - go thru each row
-        for row in DataSet:
-            # - increment to keep track of each row currently searching in
-            row_index += 1
-            # - variable to keep track of columns we're searching thru
-            # - initialized here because needs to reset for each iteration of the rows
-            col_index = -1
 
-            # - go thru each column in each row
-            for element in row:
-                # - increment to keep track of each column currently searching in
-                col_index += 1
-                # - if the value is found in the column...
-                if value == element:
-                    value_presence += 1
-                    print (value, "is present in Column", col_index+1, "row", row_index)
-
-        # - formatting of details
-        print ("*********************************")
-        print ()
-        print (value, "is present", value_presence, "times in the data set.")
-        print ()
-
-    
-    # -------------------------------------------------------------
-    # 4C. Searching through a specific column in the data set
-    else:
-        # - variables to keep track values
-        value_presence = 0
-        row_index = -1
-        col_index = -1
-
-        # - Try block to see if the column the user inputted is actual in data set
-        # - if it's not, the if statement compares an index that's out of bounds
-        try:
-            while (col_index < len(DataSet[0])):
-                col_index += 1
-                if matrix == DataSet[0][col_index]:
-                    break
-        except IndexError:
-            print ("    Error: '", matrix, "' was not found in data set")
-            print ("    Choose what to search through from the list below:")
-            print ("    - DataSet")
-            for row in DataSet[0]:
-                print ("    -", row)
-            print ()
-            sys.exit(1)     # - stop the program here
-
-        # - if column found, continue...
-        # - formatting of details
-        print ()
-        print ("Details:")
-        print ("*********************************")
-        # - now go thru each row
-        for row in DataSet:
-            row_index += 1
-            # - go thru each column in each row...
-            for element in row:
-                # - if the value is found in the column...
-                if value == element:
-                    value_presence += 1
-                    print (value, "is present in Column", col_index+1, "row", row_index)
-        # - formatting of details
-        print ("*********************************")
-        print ()
-        print (value, "is present", value_presence, "times in Column:", DataSet[0][col_index])
-        print ()
-
-# ==================================================================
-# TESTING ALL FUNCTIONS
-
-# Testing the Data Cleaning functions
-DataSet = delCol()
-DataSet = emptyRow()
-DataSet = duplicates()
-DataSet = emptyVal()
-DataSet = missingVal()
-
-for i in DataSet:
-    print(i)
-
-# Testing the Search function
-print("\n")
-matrix = input("Enter 'DataSet' to search thru whole data set, or a specific column to search through: ")
-matrix = str(matrix)
-value = input("Enter a value to search for: ")
-value = str(value)
-Search(value, matrix)
-
-# ==================================================================
+# ==========================================================================
 # 3. Statistical Operations
-
-import math
-
 columnA = []
 columnB = []
 count = 0 #Amount in Rows
-
 columnA.sort()
 columnB.sort()
 
@@ -350,32 +237,193 @@ def find80(column):
     eighty = int(.8 * (count + 1))
     return column[eighty]
 #---------------------------------------
-print("                                                  ")
-print("                     Calculator                   ")
-print("                     ----------                   ")
-print("Descriptor            Column A                 Column B")
-print("**********            ********                 ********")
-print('Count                ','{:,}'.format(count), "                  "'{:,}'.format(count))
-print('Unique               ','{:,}'.format(calcUnique(columnA)), "                   "'{:,}'.format(calcUnique(columnB))) 
-print('Mean                 ','{:,}'.format(calcMean(columnA)), "            "'{:,}'.format(calcMean(columnB)))
-print('Median               ','{:,}'.format(calcMedian(columnA)), "               "'{:,}'.format(calcMedian(columnB)))
-print('Mode                 ','{:,}'.format(calcMode(columnA)), "                 "'{:,}'.format(calcMode(columnB)))     
-print('SD                   ','{:,}'.format(stanDev(columnA)), "       "'{:,}'.format(stanDev(columnB)))
-print('Variance             ','{:,}'.format(calcVariance(columnA)), "    "'{:,}'.format(calcVariance(columnB)))
-print('Minimum              ','{:,}'.format(min(columnA)), "                      "'{:,}'.format(min(columnB)))
-print('20 Percentile        ','{:,}'.format(find20(columnA)), "                 "'{:,}'.format(find20(columnB)))
-print('40 Percentile        ','{:,}'.format(find40(columnA)), "                 "'{:,}'.format(find40(columnB)))
-print('50 Percentile        ','{:,}'.format(find50(columnA)), "                 "'{:,}'.format(find50(columnB)))
-print('60 Percentile        ','{:,}'.format(find60(columnA)), "                 "'{:,}'.format(find60(columnB)))
-print('80 Percentile        ','{:,}'.format(find80(columnA)), "                 "'{:,}'.format(find80(columnB)))
-print('Maximum              ','{:,}'.format(max(columnA)), "                 "'{:,}'.format(max(columnB)))
-print("                                                  ")
+
+# ==========================================================================
+# 4. search function - search for anything in any or all rows
+# - this function should work for any data set, regardless of rows and columns
+def Search(value, matrix):
+   
+    # -------------------------------------------------------------
+    # 4A. All data in the matrix is stored as strings
+    # - if needed, must convert the given value into a string to compare values correctly
+    value = str(value)
+    
+    # -------------------------------------------------------------
+    # 4B. Searching through the whole data set
+    if matrix == "DataSet":
+        # - variable to keep track of how many times the values is present in the data set
+        # - variable to keep track of each row we're in
+        value_presence = 0
+        row_index = -1
+        # - formatting of details
+        print ()
+        print ("Details:")
+        print ("*********************************")
+
+        # - go thru each row
+        for row in DataSet:
+            # - increment to keep track of each row currently searching in
+            row_index += 1
+            # - variable to keep track of columns we're searching thru
+            # - initialized here because needs to reset for each iteration of the rows
+            col_index = -1
+
+            # - go thru each column in each row
+            for element in row:
+                # - increment to keep track of each column currently searching in
+                col_index += 1
+                # - if the value is found in the column...
+                if value == element:
+                    value_presence += 1
+                    print (value, "is present in Column", col_index+1, "row", row_index)
+
+        # - formatting of details
+        print ("*********************************")
+        print ()
+        print (value, "is present", value_presence, "times in the data set.")
+        print ()
+
+    
+    # -------------------------------------------------------------
+    # 4C. Searching through a specific column in the data set
+    else:
+        # - variables to keep track values
+        value_presence = 0
+        row_index = -1
+        col_index = -1
+
+        # - Try block to see if the column the user inputted is actual in data set
+        # - if it's not, the if statement compares an index that's out of bounds
+        try:
+            while (col_index < len(DataSet[0])):
+                col_index += 1
+                if matrix == DataSet[0][col_index]:
+                    break
+        except IndexError:
+            print ("    Error: '", matrix, "' was not found in data set")
+            print ("    Choose what to search through from the list below:")
+            print ("    - DataSet")
+            for row in DataSet[0]:
+                print ("    -", row)
+            print ()
+            sys.exit(1)     # - stop the program here
+
+        # - if column found, continue...
+        # - formatting of details
+        print ()
+        print ("Details:")
+        print ("*********************************")
+        # - now go thru each row
+        for row in DataSet:
+            row_index += 1
+            # - go thru each column in each row...
+            for element in row:
+                # - if the value is found in the column...
+                if value == element:
+                    value_presence += 1
+                    print (value, "is present in Column", col_index+1, "row", row_index)
+        # - formatting of details
+        print ("*********************************")
+        print ()
+        print (value, "is present", value_presence, "times in Column:", DataSet[0][col_index])
+        print ()
+
+# ==========================================================================
+# Switch Statement Menu:
+def menu(option):
+    # the DataSet array must be global for each case to access it properly
+    global DataSet
+    match option:
+        case 'a':
+            DataSet = delCol()
+            print("    ***Option executed succussfully...")
+            print()
+        case 'b':
+            DataSet = emptyRow()
+            print("    ***Option executed succussfully...")
+            print()
+        case 'c':
+            DataSet = duplicates()
+            print("    ***Option executed succussfully...")
+            print()
+        case 'd':
+            DataSet = emptyVal()
+            print("    ***Option executed succussfully...")
+            print()
+        case 'e':
+            DataSet = missingVal()
+            print("    ***Option executed succussfully...")
+            print()
+        case 'f':
+            print("                                                  ")
+            print("                     Calculator                   ")
+            print("                     ----------                   ")
+            print("Descriptor            Column A                 Column B")
+            print("**********            ********                 ********")
+            print('Count                ','{:,}'.format(count), "                  "'{:,}'.format(count))
+            print('Unique               ','{:,}'.format(calcUnique(columnA)), "                   "'{:,}'.format(calcUnique(columnB))) 
+            print('Mean                 ','{:,}'.format(calcMean(columnA)), "            "'{:,}'.format(calcMean(columnB)))
+            print('Median               ','{:,}'.format(calcMedian(columnA)), "               "'{:,}'.format(calcMedian(columnB)))
+            print('Mode                 ','{:,}'.format(calcMode(columnA)), "                 "'{:,}'.format(calcMode(columnB)))     
+            print('SD                   ','{:,}'.format(stanDev(columnA)), "       "'{:,}'.format(stanDev(columnB)))
+            print('Variance             ','{:,}'.format(calcVariance(columnA)), "    "'{:,}'.format(calcVariance(columnB)))
+            print('Minimum              ','{:,}'.format(min(columnA)), "                      "'{:,}'.format(min(columnB)))
+            print('20 Percentile        ','{:,}'.format(find20(columnA)), "                 "'{:,}'.format(find20(columnB)))
+            print('40 Percentile        ','{:,}'.format(find40(columnA)), "                 "'{:,}'.format(find40(columnB)))
+            print('50 Percentile        ','{:,}'.format(find50(columnA)), "                 "'{:,}'.format(find50(columnB)))
+            print('60 Percentile        ','{:,}'.format(find60(columnA)), "                 "'{:,}'.format(find60(columnB)))
+            print('80 Percentile        ','{:,}'.format(find80(columnA)), "                 "'{:,}'.format(find80(columnB)))
+            print('Maximum              ','{:,}'.format(max(columnA)), "                 "'{:,}'.format(max(columnB)))
+            print("                                                  ")
+        case 'g':
+            matrix = input("Enter 'DataSet' to search thru whole data set, or a specific column to search through: ")
+            matrix = str(matrix)
+            value = input("Enter a value to search for: ")
+            value = str(value)
+            Search(value, matrix)
+        case 'y':
+            print('\n'.join([', '.join(['{:4}'.format(item) for item in row]) for row in DataSet]))
+        case 'z':
+            print("    -- Thank you for using our calculator! --")
+            print()
+            sys.exit(1)     # - stop the program here
+
+# Main Function:
+# - switch statement that displays menu of all options
+def main():
+    while True:
+        print()
+        print("=======================================================================")
+        print("    -- CMPS 3500 Class Projct - Statistics Summary Calculator --")
+        print()
+        print("    Data Cleaning:")
+        print("    a. Eliminate columns with non-numerical values") #delCol()
+        print("    b. Eliminate empty rows") #emptyRow()
+        print("    c. Eliminate duplicate rows") #duplicates()
+        print("    d. Eliminate rows with empty values") #emptyVal()
+        print("    e. Eliminate rows with missing values") #missingVal()
+        print()
+        print("    Statisical Operations:")
+        print("    f. View all statistical operations")
+        print()
+        print("    Search Functionality:")
+        print("    g. Search for a value in the data set")
+        print()
+        print("    General:")
+        print("    y. View data set")
+        print("    z. Exit program")
+        print()
+        option = input("    Choose an option from the menu above: ")
+        print()
+        menu(option)
+
+# Calling Main Function:
+if __name__ == "__main__":
+    main()
+    print()
 
 
-
-
-
-
+# ==========================================================================
 
 
 
